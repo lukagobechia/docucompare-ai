@@ -1,0 +1,7 @@
+Service Agreement
+
+Payment: The client must pay within 15 days.
+
+Delivery: The service must be delivered within 45 days.
+
+Termination: Either party may terminate with 60 days notice.

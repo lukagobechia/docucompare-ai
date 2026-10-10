@@ -1,4 +1,3 @@
-
 fastapi
 uvicorn[standard]
 python-multipart
@@ -6,3 +5,8 @@ pymupdf
 pydantic-settings
 pytest
 httpx
+llama-index-core
+llama-index-vector-stores-qdrant
+llama-index-embeddings-fastembed
+qdrant-client
+fastembed
