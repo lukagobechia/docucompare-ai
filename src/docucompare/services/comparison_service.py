@@ -2,13 +2,16 @@ from docucompare.schemas.comparison import (
     ComparisonRequest,
     ComparisonResponse,
     RetrievedDocument,
+    AIComparisonResponse,
 )
 from docucompare.api.dependencies import get_indexer
+from docucompare.services.openai_comparator import OpenAIComparator
 
 
 class ComparisonService:
     def __init__(self) -> None:
         self.indexer = get_indexer()
+        self.comparator = OpenAIComparator()
 
     def compare(
         self, request: ComparisonRequest
@@ -47,9 +50,32 @@ class ComparisonService:
             for node in results_b
         ]
 
+        if not documents_a or not documents_b:
+            raise ValueError(
+                "Could not retrieve text for both documents. "
+                "Check the document IDs and indexed content."
+            )
+
+        document_a_text = "\n\n".join(
+            document.text for document in documents_a
+        )
+        document_b_text = "\n\n".join(
+            document.text for document in documents_b
+        )
+
+        ai_result: AIComparisonResponse = self.comparator.compare(
+            document_a_id=request.document_a_id,
+            document_b_id=request.document_b_id,
+            document_a_text=document_a_text,
+            document_b_text=document_b_text,
+        )
+
         return ComparisonResponse(
             document_a_id=request.document_a_id,
             document_b_id=request.document_b_id,
+            summary=ai_result.summary,
+            differences=ai_result.differences,
             document_a_results=documents_a,
             document_b_results=documents_b,
         )
+
