@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from docucompare.api.routes.documents import router as documents_router
 from docucompare.api.routes.search import router as search_router
+from docucompare.api.routes.comparisons import router as comparisons_router
 
 app = FastAPI(
     title="DocuCompare AI",
@@ -20,6 +21,7 @@ app.add_middleware(
 
 app.include_router(documents_router)
 app.include_router(search_router)
+app.include_router(comparisons_router)
 
 @app.get("/health", tags=["Health"])
 async def health_check():
