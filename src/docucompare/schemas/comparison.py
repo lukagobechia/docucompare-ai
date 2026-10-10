@@ -35,3 +35,7 @@ class ComparisonResponse(BaseModel):
     differences: list[ClauseDifference]
     document_a_results: list[RetrievedDocument]
     document_b_results: list[RetrievedDocument]
+
+    verification_passed: bool
+    verification_errors: list[str]
+    verification_attempts: int

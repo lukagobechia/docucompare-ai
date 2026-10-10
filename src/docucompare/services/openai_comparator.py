@@ -26,6 +26,7 @@ class OpenAIComparator:
         document_b_id: str,
         document_a_text: str,
         document_b_text: str,
+        verification_errors: list[str] | None = None,
     ) -> AIComparisonResponse:
         response = self.client.responses.parse(
             model="gpt-4o-mini",
@@ -52,7 +53,13 @@ class OpenAIComparator:
                         f"DOCUMENT B (ID: {document_b_id})\n"
                         f"{document_b_text}\n\n"
                         "Compare these documents and provide a concise "
-                        "summary and a list of meaningful differences."
+                        "summary and a list of meaningful differences.\n\n"
+                        f"Verification errors from the previous attempt: "
+                        f"{verification_errors or 'None'}\n\n"
+                        "If verification errors are provided, correct the "
+                        "unsupported values. Use exact wording from the "
+                        "supplied document text wherever possible. Do not "
+                        "invent replacement values."
                     ),
                 },
             ],

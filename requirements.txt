@@ -12,3 +12,4 @@ qdrant-client
 fastembed
 openai
 python-dotenv
+langgraph
